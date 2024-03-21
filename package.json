@@ -1,0 +1,14 @@
+{
+  "name": "HEIC to JPG",
+  "scripts": {
+    "start": "./server.ps1",
+    "install": "yarn install --force --ignore-scripts --modules-folder pode_modules",
+    "build": "psake",
+    "test": "invoke-pester ./tests/*.ps1"
+  },
+  "license": "MIT",
+  "main": "./server.ps1",
+  "description": "",
+  "version": "1.0.0",
+  "author": "Hunter Klein"
+}

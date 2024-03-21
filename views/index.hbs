@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEIC to JPG</title>
+
+    <script src="/js/jquery-3.7.1.slim.min.js"></script>
+
+    <style>
+        :root {
+            --main-color: #E89F3C;
+        }
+
+        input {
+            margin: 15px 10px !important;
+        }
+
+        .dropzone {
+            padding: 50px;
+            border: 2px dashed var(--main-color);
+            ;
+        }
+
+        .dropzone.is-dragover {
+            background-color: #e6ecef;
+        }
+
+        .dragover {
+            bg-color: red;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .header {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            background: var(--main-color);
+        }
+
+        .header h1 {
+            color: #fff;
+            margin: 0;
+            padding: 8px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .footer {
+            margin: 0;
+            background: #E89F3C;
+            color: #fff;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            font-size: 12px;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>HEIC to JPG Converter</h1>
+    </div>
+
+    <div class="content">
+        <p>
+            <b>How to use</b>
+        </p>
+        <p>
+            Drag and drop a HEIC file into the box below. The converted JPG will automatically download.
+        </p>
+    </div>
+
+    {{#if Data.FileName}}
+    <h2>{{Data.FileName}}</h2>
+    {{/if}}
+    <form action="" method="post" enctype="multipart/form-data" id="fileForm" style="display: none;">
+        file: <input type="file" name="file" id="fileInput">
+        <input type="submit">
+    </form>
+
+    <div class="" draggable='true' style='padding: 20px'>
+        <div id='dropzone' class='dropzone'>
+            Drop HEIC file here
+        </div>
+    </div>
+
+    <script>
+        var dropzone = $('#dropzone')
+
+
+        dropzone.on('drag dragstart dragend dragover dragenter dragleave drop', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        })
+
+        dropzone.on('dragover dragenter', function () {
+            $(this).addClass('is-dragover');
+        })
+        dropzone.on('dragleave dragend drop', function () {
+            $(this).removeClass('is-dragover');
+        })
+
+        dropzone.on('drop', function (e) {
+            var files = e.originalEvent.dataTransfer.files;
+            // Now select your file upload field 
+            $('#fileInput').prop('files', files)
+            $('#fileForm').submit();
+            alert('File converted');
+        });
+    </script>
+
+
+    <div class="footer">Copyright &copy; {{YearNow}} Hunter Klein</div>
+</body>
+
+</html>

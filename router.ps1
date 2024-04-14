@@ -1,13 +1,14 @@
 {
+    Import-PodeModule -Path .\lib\Handlebars.dll
     Import-PodeModule -Path .\lib\netstandard20\Magick.NET.Core.dll
     Import-PodeModule -Path .\lib\netstandard20\Magick.NET-Q16-HDRI-x64.dll
     Import-PodeModule -Path .\pode_modules\SearchBinary\SearchBinary.psm1
 
     New-PodeLoggingMethod -Terminal | Enable-PodeErrorLogging
+    Write-PodeHost 'Pode is starting...'
 
     $port = (Get-PodeConfig).Port
-    $address = (Get-PodeConfig).Address
-    Add-PodeEndpoint -Address $address -Port $port -Protocol Http
+    Add-PodeEndpoint -Address * -Port $port -Protocol Http
 
     function Register-HandlebarsTemplate {
         param (
@@ -26,6 +27,11 @@
         $TemplateData.Username = $WebEvent.Auth.User.Name
         $TemplateData.YearNow = (Get-Date).Year
         $TemplateData.Data = $data
+        $TemplateData.Version = (Get-PodeConfig).Version
+        if (-not($env:ThemeColor)) {
+            $env:ThemeColor = (Get-PodeConfig).ThemeColor
+        }
+        $TemplateData.ThemeColor = $env:ThemeColor
         return ($template.Invoke($TemplateData))
     }
 
@@ -47,13 +53,13 @@
                 'ftypheic'
                 'mif1heic'
             )
-            $isHEIC = $false
+            [bool]$isHEIC = $false
             $fTypeMagicStrings | ForEach-Object { 
                 if (Search-Binary -ByteArray $FileBytes -Pattern $magicNumber -First) {
                     $isHEIC = $true
                 }
             }
-            if ((-not ($isHEIC))) {
+            if (-not ($isHEIC)) {
                 Write-PodeViewResponse -Path 'index' -Data @{
                     FileName = 'Input file is not HEIC'
                 }
@@ -78,7 +84,6 @@
             $FileName = $null
         }
         Write-PodeViewResponse -Path 'index' -Data @{
-            # FileName = $WebEvent.Data['file']
             FileName = $FileName
         }
     }

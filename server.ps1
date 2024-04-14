@@ -3,11 +3,11 @@
     Server entrypoint for Pode App
 #>
 
-using assembly .\lib\Handlebars.dll
+Add-Type -Path '.\lib\Handlebars.dll'
 
 Import-Module -Name Pode
 
-$PID | Out-File .\pid.lock -Force
+# $PID | Out-File .\pid.lock -Force #Uncomment to help in identifying the PID of the pwsh process hosting this website.
 
 $threads = (Get-PodeConfig).Threads
 

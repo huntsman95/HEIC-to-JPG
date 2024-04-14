@@ -1121,6 +1121,11 @@
             The handler called when a partial template cannot be found.
             </summary>
         </member>
+        <member name="P:HandlebarsDotNet.HandlebarsConfiguration.PartialRecursionDepthLimit">
+            <summary>
+            Maximum depth to recurse into partial templates when evaluating the template. Defaults to 100.
+            </summary>
+        </member>
         <member name="P:HandlebarsDotNet.HandlebarsConfiguration.AliasProviders">
             <inheritdoc cref="T:HandlebarsDotNet.IMemberAliasProvider"/>
         </member>

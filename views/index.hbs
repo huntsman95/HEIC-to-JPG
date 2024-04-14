@@ -7,12 +7,19 @@
     <title>HEIC to JPG</title>
 
     <script src="/js/jquery-3.7.1.slim.min.js"></script>
+    <script src="/awesome-notifications/index.var.js"></script>
+    <link rel="stylesheet" href="/awesome-notifications/style.css">
 
+    <!-- our project just needs Font Awesome Solid + Brands -->
+    <link href="/fontawesome-free-6.5.2-web/css/all.css" rel="stylesheet" />
+    <!--noformat-->
     <style>
         :root {
-            --main-color: #E89F3C;
+            --main-color: {{ThemeColor}};
         }
-
+    </style>
+    <!--noformat-->
+    <style>
         input {
             margin: 15px 10px !important;
         }
@@ -60,10 +67,12 @@
 
         .footer {
             margin: 0;
-            background: #E89F3C;
+            background: var(--main-color);
             color: #fff;
             text-align: center;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: Arial,
+                Helvetica,
+                sans-serif;
             position: absolute;
             bottom: 0;
             left: 0;
@@ -104,8 +113,7 @@
     </div>
 
     <script>
-        var dropzone = $('#dropzone')
-
+        var dropzone = $('#dropzone');
 
         dropzone.on('drag dragstart dragend dragover dragenter dragleave drop', function (e) {
             e.preventDefault();
@@ -124,12 +132,13 @@
             // Now select your file upload field 
             $('#fileInput').prop('files', files)
             $('#fileForm').submit();
-            alert('File converted');
+            //alert('File converted');
+            let notifier = new AWN();
+            notifier.info('File has been submitted and should download shortly');
         });
     </script>
 
-
-    <div class="footer">Copyright &copy; {{YearNow}} Hunter Klein</div>
+    <div class="footer">Copyright &copy; {{YearNow}} Hunter Klein - v{{Version}}</div>
 </body>
 
 </html>

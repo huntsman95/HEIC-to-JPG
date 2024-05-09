@@ -55,7 +55,7 @@
             $isHEIC = $false
             $fTypeMagicStrings | ForEach-Object { 
                 if (Search-Binary -ByteArray $FileBytes -Pattern ([System.Text.Encoding]::UTF8.GetBytes($_)) -First) {
-                    $isHEIC = $true
+                    Set-Variable -Name 'isHEIC' -Value $true
                 }
             }
             if (-not ($isHEIC)) {

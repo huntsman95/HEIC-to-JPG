@@ -46,22 +46,21 @@
 
             #check if file is HEIC using magic number
             
-            $magicNumber = @(0x66, 0x74, 0x79, 0x70)
             $fTypeMagicStrings = @(
                 'ftypmif1'
                 'ftypmsf1'
                 'ftypheic'
                 'mif1heic'
             )
-            [bool]$isHEIC = $false
+            $isHEIC = $false
             $fTypeMagicStrings | ForEach-Object { 
-                if (Search-Binary -ByteArray $FileBytes -Pattern $magicNumber -First) {
+                if (Search-Binary -ByteArray $FileBytes -Pattern ([System.Text.Encoding]::UTF8.GetBytes($_)) -First) {
                     $isHEIC = $true
                 }
             }
             if (-not ($isHEIC)) {
                 Write-PodeViewResponse -Path 'index' -Data @{
-                    FileName = 'Input file is not HEIC'
+                    NotHEIC = $true
                 }
                 return
             }

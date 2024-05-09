@@ -90,6 +90,24 @@
     </div>
 
     <div class="content">
+        {{#if Data.NotHEIC}}
+        <script>
+            //let notifier = new AWN();
+            //notifier.alert('File was not a HEIC file and could not be converted. Please try again with a HEIC file');
+            let notifier = new AWN();
+            let onOk = () => { };
+            notifier.confirm(
+                'Please try again with a HEIC file',
+                onOk,
+                false,
+                {
+                    labels: {
+                        confirm: 'Invalid File Type'
+                    }
+                }
+            )
+        </script>
+        {{/if}}
         <p>
             <b>How to use</b>
         </p>
@@ -98,9 +116,6 @@
         </p>
     </div>
 
-    {{#if Data.FileName}}
-    <h2>{{Data.FileName}}</h2>
-    {{/if}}
     <form action="" method="post" enctype="multipart/form-data" id="fileForm" style="display: none;">
         file: <input type="file" name="file" id="fileInput">
         <input type="submit">
